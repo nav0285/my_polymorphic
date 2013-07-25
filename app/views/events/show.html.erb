@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @event.name %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @event.content %>
+</p>
+
+<h3>Comments</h3>
+	<% if @comments.nil? %>
+	<% else %>
+		<ul><% @comments.each do |comment| %>
+		<li><%= comment.content %></li>
+	<% end %></ul>
+<% end %>
+
+<%= form_for(@event.comments.build) do |f| %>
+	<%= f.text_area :content %>	
+	<%= f.hidden_field(:commentable_type, :value=>"Event") %>
+	<%= f.hidden_field(:commentable_id, :value=>@event.id) %>
+	<%= f.submit "Comment" %>
+<% end %>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>

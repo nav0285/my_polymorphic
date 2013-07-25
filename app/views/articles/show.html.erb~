@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @article.title %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @article.content %>
+</p>
+
+<h3>Comments</h3>
+<% if @comments.nil? %>
+<% else %>
+<ul><% @comments.each do |comment| %>
+<li><%= comment.content %></li>
+<% end %></ul>
+<% end %>
+
+<%= form_for(@comment) do |f| %>
+<%= f.text_area :content %>
+<%= f.hidden_field(:commentable_type, :value=>"Article") %>
+<%= f.hidden_field(:commentable_id, :value=>@article.id) %>
+<%= f.submit "Comment" %>
+<% end %>
+
+<%= link_to 'Edit', edit_article_path(@article) %> |
+<%= link_to 'Back', articles_path %>
