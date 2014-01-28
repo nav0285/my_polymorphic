@@ -1,21 +1,18 @@
 class ArticlesController < ApplicationController
 
+	before_filter :self_load, :only=>[:show, :edit, :update, :destroy]
+	
   def index
     @articles = Article.all
   end
 
-  def show
-    @article = Article.find(params[:id])	
+  def show	
     @comments = @article.comments
     @comment = @article.comments.build
   end
 
   def new
     @article = Article.new
-  end
-
-  def edit
-    @article = Article.find(params[:id])
   end
 
   def create
@@ -28,7 +25,6 @@ class ArticlesController < ApplicationController
   end
 
   def update
-    @article = Article.find(params[:id])
     if @article.update_attributes(params[:article])
       redirect_to @article, notice: 'Article was successfully updated.' 
     else
@@ -37,8 +33,14 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find(params[:id])
     @article.destroy
     redirect_to articles_url 
   end
+  
+private
+
+	def self_load
+		@article = Article.find(params[:id])  
+	end
+	
 end

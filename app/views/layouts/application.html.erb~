@@ -7,7 +7,7 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<div class='header' >
+<div text-align='center' >
 <%= link_to "Articles", articles_path %>
 <%= link_to "Events", events_path %>
 </div>
