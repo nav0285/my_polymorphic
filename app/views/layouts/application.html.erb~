@@ -8,10 +8,15 @@
 </head>
 <body>
 <div class='header' >
-<%= link_to "Articles", articles_path %>
-<%= link_to "Events", events_path %><br/>
-<%= link_to 'Sign Up', sign_up_path %>
-<%= link_to 'Sign In', sign_in_path %>
+	<%= link_to "Articles", articles_path %>
+	<%= link_to "Events", events_path %><br/>
+	<% if current_user %>
+		<p>Logged in as <%= @current_user.name %>
+			 , <%= link_to 'sign out', sign_out_path %></p>
+	<% else %>	
+		<%= link_to 'Sign Up', sign_up_path %>
+		<%= link_to 'Sign In', sign_in_path %>
+	<% end %>
 </div>
 <%= yield %>
 

@@ -8,6 +8,7 @@ MyPolymorphic::Application.routes.draw do
   
   get 'sign_up' => 'users#new'
   get 'sign_in' => 'sessions#new'
+  get 'sign_out' => 'sessions#destroy'
 
 	root :to=>'articles#index'
   # The priority is based upon order of creation:
