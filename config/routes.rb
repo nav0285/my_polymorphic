@@ -1,8 +1,13 @@
 MyPolymorphic::Application.routes.draw do
-
+	
+	resources :users, :only => [:new, :create]
   resources :comments
   resources :events
   resources :articles
+  resources :sessions, :only => [:new, :create, :destroy]
+  
+  get 'sign_up' => 'users#new'
+  get 'sign_in' => 'sessions#new'
 
 	root :to=>'articles#index'
   # The priority is based upon order of creation:
