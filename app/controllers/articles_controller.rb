@@ -2,23 +2,28 @@ class ArticlesController < ApplicationController
 
 	before_filter :self_load, :only=>[:show, :edit, :update, :destroy]
 	
+	before_filter :require_login, :only=>[:edit, :update, :destroy]
+	
+	before_filter :authorised_user, :only => [:edit, :update, :destroy]
+	
   def index
     @articles = Article.all
   end
 
-  def show	
+  def show
     @comments = @article.comments
     @comment = @article.comments.build
   end
 
   def new
-    @article = Article.new
+    @article = current_user.articles.build
   end
 
   def create
-    @article = Article.new(params[:article])
+    @article = current_user.articles.new(params[:article])
     if @article.save
-    	redirect_to @article, notice: 'Article was successfully created.' 
+    	flash[:success] = 'Article was successfully created.'
+    	redirect_to @article 
     else
       render action: "new"
     end
@@ -26,7 +31,8 @@ class ArticlesController < ApplicationController
 
   def update
     if @article.update_attributes(params[:article])
-      redirect_to @article, notice: 'Article was successfully updated.' 
+      flash[:success] = 'Article was successfully updated.'
+      redirect_to @article 
     else
       render action: "edit" 
     end
@@ -36,11 +42,22 @@ class ArticlesController < ApplicationController
     @article.destroy
     redirect_to articles_url 
   end
-  
+
 private
 
 	def self_load
-		@article = Article.find(params[:id])  
+		@article = Article.find(params[:id])
 	end
+
+	def require_login
+		redirect_to sign_in_path if !current_user			
+	end
+
+	def authorised_user
+		if current_user.id != @article.user_id
+  		 flash[:error] = 'You are not authorised'
+  		redirect_to @article
+  	end
+	end	
 	
 end

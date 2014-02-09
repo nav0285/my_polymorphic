@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140203052619) do
+ActiveRecord::Schema.define(:version => 20140206025927) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
     t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
 
   create_table "comments", :force => true do |t|
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20140203052619) do
     t.string   "commentable_type"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "user_id"
   end
 
   create_table "events", :force => true do |t|
@@ -33,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20140203052619) do
     t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|

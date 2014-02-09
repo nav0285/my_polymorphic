@@ -1,20 +1,20 @@
 class EventsController < ApplicationController
 
+	before_filter :self_load, :only=>[:show, :edit, :update, :destroy]
+	
+	before_filter :require_login, :only=>[:edit, :update, :destroy]
+
   def index
     @events = Event.all    
   end
 
   def show
-    @event = Event.find(params[:id])
-    @comments = @event.comments
+    @comment = @event.comments.build
+		@comments = @event.comments
   end
 
   def new
     @event = Event.new
-  end
-
-  def edit
-    @event = Event.find(params[:id])
   end
 
   def create
@@ -27,7 +27,6 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = Event.find(params[:id])
     if @event.update_attributes(params[:event])
       redirect_to @event, notice: 'Event was successfully updated.' 
     else
@@ -36,8 +35,18 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = Event.find(params[:id])
     @event.destroy
     redirect_to events_url 
   end
+
+private
+
+	def self_load
+		@event = Event.find(params[:id])
+	end
+
+	def require_login
+		redirect_to sign_in_path, notice: 'Please Log in' if !current_user			
+	end
+
 end
