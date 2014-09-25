@@ -40,7 +40,11 @@ class ArticlesController < ApplicationController
 
   def destroy
     @article.destroy
-    redirect_to articles_url 
+    @articles = Article.all
+    respond_to do |format|
+    	format.html {redirect_to articles_url}
+    	format.js {}
+    end	 
   end
 
 private
