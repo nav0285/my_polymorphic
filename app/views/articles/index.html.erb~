@@ -17,7 +17,7 @@
 	    <% if current_user %>
 	   		<% if current_user.id == article.user_id %>
 	    		<td><%= link_to 'Edit', edit_article_path(article) %></td>
-	    		<td><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure??', remote: true } %></td>
+	    		<td class="delete"><%= link_to 'Destroy', article, method: :delete, data: { confirm: 'Are you sure??', remote: true } %></td>
 	  		<% end %>
 	  	<% end %>
 	  </tr>
