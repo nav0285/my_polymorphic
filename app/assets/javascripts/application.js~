@@ -13,3 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+jQuery ->
+	$(".field").focus ->
+		$(this).css("background-color", "green")

@@ -41,9 +41,9 @@ class ArticlesController < ApplicationController
   def destroy
     @article.destroy
     respond_to do |format|
-    	format.html {redirect_to articles_url}
+    	format.html{ redirect_to root_url }
     	format.js {}
-    end	 
+    end	
   end
 
 private
